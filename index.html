@@ -98,6 +98,21 @@
     /* Toast notification */
     .toast { animation: slideInRight 0.4s ease-out; }
     @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* WhatsApp popup */
+    .wa-popup { animation: waPopIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes waPopIn { from { opacity: 0; transform: scale(0.8) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    /* WA button pulse */
+    @keyframes waPulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); } 70% { box-shadow: 0 0 0 14px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+    .wa-pulse { animation: waPulse 2s ease-out infinite; }
+
+    /* Program card hover */
+    .program-card { transition: all 0.3s ease; }
+    .program-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -12px rgba(220,38,38,0.15); }
+
+    /* Line clamp */
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   </style>
 </head>
 
@@ -123,6 +138,8 @@
       <div class="hidden md:flex items-center gap-8">
         <a href="#landing" onclick="navigateTo('landing')" class="nav-link text-sm font-medium text-gray-600 hover:text-brand-red transition-colors duration-200">Beranda</a>
         <a href="#katalog" onclick="navigateTo('katalog')" class="nav-link text-sm font-medium text-gray-600 hover:text-brand-red transition-colors duration-200">Katalog</a>
+        <a href="#layanan" onclick="navigateTo('layanan')" class="nav-link text-sm font-medium text-gray-600 hover:text-brand-red transition-colors duration-200">Layanan</a>
+        <a href="#kirim-naskah" onclick="navigateTo('kirim-naskah')" class="nav-link text-sm font-medium text-gray-600 hover:text-brand-red transition-colors duration-200">Kirim Naskah</a>
         <a href="#katalog" onclick="navigateTo('katalog')" class="inline-flex items-center gap-2 bg-brand-red text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-brand-red-dark transition-colors duration-200 shadow-lg shadow-brand-red/20">
           <iconify-icon icon="lucide:shopping-bag" width="16"></iconify-icon>
           Beli Buku
@@ -140,6 +157,8 @@
       <div class="px-6 py-4 flex flex-col gap-3">
         <a href="#landing" onclick="navigateTo('landing'); toggleMobileMenu();" class="text-sm font-medium text-gray-700 hover:text-brand-red py-2 transition-colors">Beranda</a>
         <a href="#katalog" onclick="navigateTo('katalog'); toggleMobileMenu();" class="text-sm font-medium text-gray-700 hover:text-brand-red py-2 transition-colors">Katalog</a>
+        <a href="#layanan" onclick="navigateTo('layanan'); toggleMobileMenu();" class="text-sm font-medium text-gray-700 hover:text-brand-red py-2 transition-colors">Layanan</a>
+        <a href="#kirim-naskah" onclick="navigateTo('kirim-naskah'); toggleMobileMenu();" class="text-sm font-medium text-gray-700 hover:text-brand-red py-2 transition-colors">Kirim Naskah</a>
         <a href="#katalog" onclick="navigateTo('katalog'); toggleMobileMenu();" class="inline-flex items-center justify-center gap-2 bg-brand-red text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-brand-red-dark transition-colors">
           <iconify-icon icon="lucide:shopping-bag" width="16"></iconify-icon>
           Beli Buku
@@ -156,13 +175,11 @@
 
     <!-- HERO SECTION -->
     <section class="hero-gradient grid-bg min-h-screen flex items-center pt-16 relative overflow-hidden">
-      <!-- Decorative blobs -->
       <div class="absolute top-20 left-10 w-72 h-72 bg-brand-yellow/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute bottom-20 right-10 w-96 h-96 bg-brand-red/8 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="max-w-7xl mx-auto px-6 py-20 md:py-28 w-full">
         <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          <!-- Left: Text -->
           <div class="order-2 md:order-1">
             <div class="inline-flex items-center gap-2 bg-brand-yellow-light border border-brand-yellow/30 text-brand-yellow-dark text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
               <iconify-icon icon="lucide:sparkles" width="14"></iconify-icon>
@@ -181,33 +198,31 @@
                 <iconify-icon icon="lucide:book-open" width="18"></iconify-icon>
                 Lihat Katalog
               </a>
-              <a href="#tentang" class="inline-flex items-center gap-2 bg-white text-gray-700 font-semibold px-8 py-3.5 rounded-full border border-gray-200 hover:border-brand-red hover:text-brand-red transition-all duration-200 shadow-sm">
-                <iconify-icon icon="lucide:info" width="18"></iconify-icon>
-                Tentang Kami
+              <a href="#layanan" onclick="navigateTo('layanan')"
+                 class="inline-flex items-center gap-2 bg-white text-gray-700 font-semibold px-8 py-3.5 rounded-full border border-gray-200 hover:border-brand-red hover:text-brand-red transition-all duration-200 shadow-sm">
+                <iconify-icon icon="lucide:pen-tool" width="18"></iconify-icon>
+                Layanan Kami
               </a>
             </div>
 
-            <!-- Quick stats -->
             <div class="flex gap-8 mt-12 pt-8 border-t border-gray-200/60">
               <div>
-                <div class="text-2xl font-bold text-brand-red" id="stat-books">50+</div>
+                <div class="text-2xl font-bold text-brand-red">50+</div>
                 <div class="text-xs text-gray-400 mt-0.5">Judul Buku</div>
               </div>
               <div>
-                <div class="text-2xl font-bold text-brand-yellow-dark" id="stat-authors">30+</div>
+                <div class="text-2xl font-bold text-brand-yellow-dark">30+</div>
                 <div class="text-xs text-gray-400 mt-0.5">Penulis</div>
               </div>
               <div>
-                <div class="text-2xl font-bold text-brand-red" id="stat-readers">10K+</div>
+                <div class="text-2xl font-bold text-brand-red">10K+</div>
                 <div class="text-xs text-gray-400 mt-0.5">Pembaca</div>
               </div>
             </div>
           </div>
 
-          <!-- Right: Hero Image / Floating Books -->
           <div class="order-1 md:order-2 flex justify-center">
             <div class="relative">
-              <!-- Main book visual -->
               <div class="float-anim w-64 md:w-80">
                 <div class="bg-gradient-to-br from-brand-red to-brand-red-dark rounded-2xl shadow-2xl shadow-brand-red/30 p-8 text-white relative overflow-hidden">
                   <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
@@ -223,7 +238,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Floating decorative elements -->
               <div class="absolute -top-4 -right-4 w-20 h-20 bg-brand-yellow/20 rounded-2xl rotate-12 float-anim" style="animation-delay: 1s;"></div>
               <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-brand-red/15 rounded-xl -rotate-12 float-anim" style="animation-delay: 2s;"></div>
             </div>
@@ -243,25 +257,22 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-          <!-- Feature 1 -->
           <div class="group bg-white border border-gray-100 rounded-2xl p-8 hover:border-brand-red/30 hover:shadow-xl hover:shadow-brand-red/5 transition-all duration-300">
-            <div class="w-14 h-14 bg-brand-red-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+            <div class="w-14 h-14 bg-brand-red-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red transition-all duration-300">
               <iconify-icon icon="lucide:heart" width="24" class="text-brand-red group-hover:text-white"></iconify-icon>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Diterbitkan dengan Cinta</h3>
             <p class="text-sm text-gray-500 font-light leading-relaxed">Setiap buku melewati proses penyuntingan dan desain yang teliti agar memberikan pengalaman terbaik bagi pembaca.</p>
           </div>
-          <!-- Feature 2 -->
           <div class="group bg-white border border-gray-100 rounded-2xl p-8 hover:border-brand-yellow/30 hover:shadow-xl hover:shadow-brand-yellow/5 transition-all duration-300">
-            <div class="w-14 h-14 bg-brand-yellow-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-yellow group-hover:text-white transition-all duration-300">
+            <div class="w-14 h-14 bg-brand-yellow-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-yellow transition-all duration-300">
               <iconify-icon icon="lucide:users" width="24" class="text-brand-yellow-dark group-hover:text-white"></iconify-icon>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Penulis Lokal</h3>
             <p class="text-sm text-gray-500 font-light leading-relaxed">Kami memberdayakan penulis-penulis berbakat Indonesia untuk menuangkan karya terbaik mereka ke dunia literasi.</p>
           </div>
-          <!-- Feature 3 -->
           <div class="group bg-white border border-gray-100 rounded-2xl p-8 hover:border-brand-red/30 hover:shadow-xl hover:shadow-brand-red/5 transition-all duration-300">
-            <div class="w-14 h-14 bg-brand-red-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+            <div class="w-14 h-14 bg-brand-red-light rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red transition-all duration-300">
               <iconify-icon icon="lucide:truck" width="24" class="text-brand-red group-hover:text-white"></iconify-icon>
             </div>
             <h3 class="text-lg font-semibold text-gray-900 mb-3">Pengiriman Cepat</h3>
@@ -271,8 +282,84 @@
       </div>
     </section>
 
-    <!-- FEATURED BOOKS (dari Google Sheets) -->
-    <section class="py-24 bg-gradient-to-b from-gray-50 to-white grid-bg">
+    <!-- PROGRAM UNGGULAN SECTION -->
+    <section class="py-24 bg-gradient-to-b from-brand-yellow-light/50 to-white grid-bg">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="inline-flex items-center gap-2 text-brand-yellow-dark text-xs font-semibold tracking-widest uppercase mb-4">
+            <span class="w-8 h-px bg-brand-yellow"></span> Program Unggulan <span class="w-8 h-px bg-brand-yellow"></span>
+          </span>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-4">Layanan Terbaik Kami</h2>
+          <p class="text-gray-500 font-light max-w-lg mx-auto">Wujudkan karya tulis Anda bersama JP Creative. Dari penulisan hingga penerbitan, kami siap membantu!</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Ghost Writer -->
+          <div class="program-card bg-white border border-gray-100 rounded-2xl p-6 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-red to-brand-yellow"></div>
+            <div class="w-16 h-16 bg-brand-red-light rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <iconify-icon icon="lucide:pen-tool" width="28" class="text-brand-red"></iconify-icon>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Ghost Writer</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed mb-4">Punya ide tapi belum bisa menulis? Tim penulis kami siap membantu mewujudkan buku impian Anda.</p>
+            <div class="inline-flex items-center gap-1 bg-brand-red-light text-brand-red font-bold text-lg px-4 py-2 rounded-xl">
+              Mulai <span class="text-sm font-medium ml-1">Rp 1,5 Jt</span>
+            </div>
+          </div>
+
+          <!-- Terbit Murah -->
+          <div class="program-card bg-white border border-gray-100 rounded-2xl p-6 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-yellow to-brand-red"></div>
+            <div class="w-16 h-16 bg-brand-yellow-light rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <iconify-icon icon="lucide:book-up" width="28" class="text-brand-yellow-dark"></iconify-icon>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Terbit Murah</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed mb-4">Terbitkan buku Anda dengan biaya terjangkau. Proses profesional, hasil berkualitas.</p>
+            <div class="inline-flex items-center gap-1 bg-brand-yellow-light text-brand-yellow-dark font-bold text-lg px-4 py-2 rounded-xl">
+              Mulai <span class="text-sm font-medium ml-1">Rp 50K/buku</span>
+            </div>
+          </div>
+
+          <!-- Cetak Buku -->
+          <div class="program-card bg-white border border-gray-100 rounded-2xl p-6 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-red to-brand-yellow"></div>
+            <div class="w-16 h-16 bg-brand-red-light rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <iconify-icon icon="lucide:printer" width="28" class="text-brand-red"></iconify-icon>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Cetak Buku</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed mb-4">Cetak buku dengan kualitas terbaik. Tersedia berbagai pilihan ukuran dan bahan cetak.</p>
+            <div class="inline-flex items-center gap-1 bg-brand-red-light text-brand-red font-bold text-lg px-4 py-2 rounded-xl">
+              Min. <span class="text-sm font-medium ml-1">5 Eksemplar</span>
+            </div>
+          </div>
+
+          <!-- Pelatihan Menulis -->
+          <div class="program-card bg-white border border-gray-100 rounded-2xl p-6 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-yellow to-brand-red"></div>
+            <div class="w-16 h-16 bg-brand-yellow-light rounded-2xl flex items-center justify-center mx-auto mb-5">
+              <iconify-icon icon="lucide:graduation-cap" width="28" class="text-brand-yellow-dark"></iconify-icon>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Pelatihan Menulis</h3>
+            <p class="text-sm text-gray-500 font-light leading-relaxed mb-4">Belajar menulis dari nol hingga mahir. Dibimbing oleh penulis berpengalaman.</p>
+            <div class="inline-flex items-center gap-1 bg-brand-yellow-light text-brand-yellow-dark font-bold text-lg px-4 py-2 rounded-xl">
+              <iconify-icon icon="lucide:sparkles" width="18" class="mr-1"></iconify-icon>
+              <span class="text-sm font-medium">Daftar Sekarang</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <a href="#layanan" onclick="navigateTo('layanan')"
+             class="inline-flex items-center gap-2 bg-brand-red text-white font-semibold px-8 py-3.5 rounded-full hover:bg-brand-red-dark transition-all duration-200 shadow-lg shadow-brand-red/25">
+            <iconify-icon icon="lucide:file-text" width="18"></iconify-icon>
+            Isi Formulir Pendaftaran
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED BOOKS -->
+    <section class="py-24 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-end justify-between mb-12">
           <div>
@@ -286,7 +373,6 @@
           </a>
         </div>
         <div id="featured-books" class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <!-- Filled by JS -->
           <div class="col-span-full text-center py-12">
             <div class="w-8 h-8 border-2 border-brand-red border-t-transparent rounded-full spinner mx-auto mb-4"></div>
             <p class="text-sm text-gray-400">Memuat buku unggulan...</p>
@@ -301,7 +387,7 @@
     </section>
 
     <!-- CTA SECTION -->
-    <section class="py-24 bg-white">
+    <section class="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-4xl mx-auto px-6">
         <div class="relative bg-gradient-to-br from-brand-red to-brand-red-dark rounded-3xl p-12 md:p-16 text-center text-white overflow-hidden">
           <div class="absolute top-0 right-0 w-64 h-64 bg-brand-yellow/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
@@ -309,12 +395,19 @@
           <div class="relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Siap Menerbitkan Karya Anda?</h2>
             <p class="text-white/70 font-light mb-8 max-w-md mx-auto">Kami menerima naskah dari penulis baru. Hubungi kami untuk diskusi lebih lanjut tentang penerbitan buku Anda.</p>
-            <a href="https://wa.me/6281234567890?text=Halo%20JP%20Creative%2C%20saya%20ingin%20bertanya%20tentang%20penerbitan%20naskah."
-               target="_blank"
-               class="inline-flex items-center gap-2 bg-white text-brand-red font-semibold px-8 py-3.5 rounded-full hover:bg-brand-yellow-light transition-colors duration-200 shadow-lg">
-              <iconify-icon icon="lucide:message-circle" width="18"></iconify-icon>
-              Hubungi Kami
-            </a>
+            <div class="flex flex-wrap gap-4 justify-center">
+              <a href="https://wa.me/6282112038785?text=Halo%20JP%20Creative%2C%20saya%20ingin%20bertanya%20tentang%20penerbitan%20naskah."
+                 target="_blank"
+                 class="inline-flex items-center gap-2 bg-white text-brand-red font-semibold px-8 py-3.5 rounded-full hover:bg-brand-yellow-light transition-colors duration-200 shadow-lg">
+                <iconify-icon icon="lucide:message-circle" width="18"></iconify-icon>
+                Hubungi via WhatsApp
+              </a>
+              <a href="#kirim-naskah" onclick="navigateTo('kirim-naskah')"
+                 class="inline-flex items-center gap-2 bg-white/10 text-white border border-white/30 font-semibold px-8 py-3.5 rounded-full hover:bg-white/20 transition-colors duration-200">
+                <iconify-icon icon="lucide:send" width="18"></iconify-icon>
+                Kirim Naskah
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -324,7 +417,8 @@
     <footer class="bg-gray-900 text-white py-16">
       <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-12 mb-12">
-          <div class="md:col-span-2">
+          <!-- Logo & About -->
+          <div class="md:col-span-1">
             <div class="flex items-center gap-3 mb-4">
               <img src="https://z-cdn-media.chatglm.cn/files/84580662-42e4-4169-b71e-27018b68b221.jpeg?auth_key=1878658097-49c5fe37af24429d9a6f3748a2e7c7dc-0-4f01701efdb67110d10722f7f633f393"
                    alt="JP Creative" class="h-10 w-10 rounded-lg object-cover" />
@@ -333,28 +427,46 @@
                 <div class="text-[10px] text-gray-400 italic">Menerbitkan dengan Cinta</div>
               </div>
             </div>
-            <p class="text-sm text-gray-400 font-light leading-relaxed max-w-sm">Penerbit buku independen yang berkomitmen menghadirkan karya-karya terbaik untuk pembaca Indonesia.</p>
+            <p class="text-sm text-gray-400 font-light leading-relaxed">Penerbit buku independen yang berkomitmen menghadirkan karya-karya terbaik untuk pembaca Indonesia.</p>
           </div>
+          <!-- Navigasi -->
           <div>
             <h4 class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">Navigasi</h4>
             <div class="flex flex-col gap-2">
               <a href="#landing" onclick="navigateTo('landing')" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors">Beranda</a>
               <a href="#katalog" onclick="navigateTo('katalog')" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors">Katalog Buku</a>
-              <a href="#tentang" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors">Tentang Kami</a>
+              <a href="#layanan" onclick="navigateTo('layanan')" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors">Layanan</a>
+              <a href="#kirim-naskah" onclick="navigateTo('kirim-naskah')" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors">Kirim Naskah</a>
             </div>
           </div>
+          <!-- Kontak -->
           <div>
             <h4 class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">Kontak</h4>
-            <div class="flex flex-col gap-2">
-              <a href="https://wa.me/6281234567890" target="_blank" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-center gap-2">
-                <iconify-icon icon="lucide:message-circle" width="14"></iconify-icon> WhatsApp
+            <div class="flex flex-col gap-3">
+              <a href="https://wa.me/6282112038785" target="_blank" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-start gap-2">
+                <iconify-icon icon="lucide:message-circle" width="14" class="mt-0.5 shrink-0"></iconify-icon>
+                <span>0821-1203-8785</span>
               </a>
-              <a href="mailto:info@jpcreative.id" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-center gap-2">
-                <iconify-icon icon="lucide:mail" width="14"></iconify-icon> info@jpcreative.id
+              <a href="mailto:admin@jpcrtv.my.id" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-start gap-2">
+                <iconify-icon icon="lucide:mail" width="14" class="mt-0.5 shrink-0"></iconify-icon>
+                <span>admin@jpcrtv.my.id</span>
               </a>
-              <a href="#" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-center gap-2">
-                <iconify-icon icon="lucide:instagram" width="14"></iconify-icon> @jpcreative
+              <a href="https://www.facebook.com/profile.php?id=100063640946849" target="_blank" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-start gap-2">
+                <iconify-icon icon="lucide:facebook" width="14" class="mt-0.5 shrink-0"></iconify-icon>
+                <span>JePe Creative</span>
               </a>
+              <a href="https://instagram.com/jpcreative." target="_blank" class="text-sm text-gray-400 hover:text-brand-yellow transition-colors flex items-start gap-2">
+                <iconify-icon icon="lucide:instagram" width="14" class="mt-0.5 shrink-0"></iconify-icon>
+                <span>@jpcreative.</span>
+              </a>
+            </div>
+          </div>
+          <!-- Alamat -->
+          <div>
+            <h4 class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">Alamat</h4>
+            <div class="flex items-start gap-2 text-sm text-gray-400 font-light leading-relaxed">
+              <iconify-icon icon="lucide:map-pin" width="14" class="mt-1 shrink-0 text-brand-red"></iconify-icon>
+              <span>Alamanda Regency, Jl. Kenanga 3, Blok K10/20, Karangsatria, Tambun Utara, Kab. Bekasi 175111</span>
             </div>
           </div>
         </div>
@@ -372,7 +484,6 @@
   <!-- ============================================ -->
   <div id="page-katalog" class="page">
 
-    <!-- Catalog Header -->
     <section class="pt-24 pb-8 bg-gradient-to-b from-brand-yellow-light via-white to-white grid-bg">
       <div class="max-w-7xl mx-auto px-6">
         <span class="inline-flex items-center gap-2 text-brand-red text-xs font-semibold tracking-widest uppercase mb-4">
@@ -383,17 +494,14 @@
       </div>
     </section>
 
-    <!-- Search & Filter Bar -->
     <section class="sticky top-16 z-40 bg-white/90 nav-glass border-b border-gray-100 py-4">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col sm:flex-row gap-4 items-center">
-          <!-- Search input -->
           <div class="relative flex-1 w-full">
             <iconify-icon icon="lucide:search" width="18" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></iconify-icon>
             <input type="text" id="searchInput" placeholder="Cari judul buku, penulis..."
                    class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-light text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-red/30 focus:border-brand-red transition-all duration-200" />
           </div>
-          <!-- Book count -->
           <div class="flex items-center gap-2 text-sm text-gray-500 shrink-0">
             <iconify-icon icon="lucide:book-open" width="16" class="text-brand-red"></iconify-icon>
             <span id="bookCount">0</span> buku ditemukan
@@ -402,16 +510,13 @@
       </div>
     </section>
 
-    <!-- Book Grid -->
     <section class="py-12 bg-white min-h-[60vh]">
       <div class="max-w-7xl mx-auto px-6">
         <div id="book-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-          <!-- Loading state -->
           <div id="catalog-loading" class="col-span-full flex flex-col items-center justify-center py-20">
             <div class="w-10 h-10 border-2 border-brand-red border-t-transparent rounded-full spinner mb-4"></div>
             <p class="text-sm text-gray-400">Memuat katalog buku...</p>
           </div>
-          <!-- Empty state -->
           <div id="catalog-empty" class="hidden col-span-full flex flex-col items-center justify-center py-20">
             <iconify-icon icon="lucide:search-x" width="48" class="text-gray-300 mb-4"></iconify-icon>
             <p class="text-lg font-medium text-gray-400 mb-2">Buku tidak ditemukan</p>
@@ -421,7 +526,6 @@
       </div>
     </section>
 
-    <!-- Footer (same as landing) -->
     <footer class="bg-gray-900 text-white py-16">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col items-center text-center">
@@ -444,9 +548,266 @@
 
 
   <!-- ============================================ -->
+  <!-- PAGE: LAYANAN (Embed Form Program Unggulan)  -->
+  <!-- ============================================ -->
+  <div id="page-layanan" class="page">
+
+    <section class="pt-24 pb-8 bg-gradient-to-b from-brand-red-light/30 via-white to-white grid-bg">
+      <div class="max-w-7xl mx-auto px-6">
+        <a href="#landing" onclick="navigateTo('landing')" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-brand-red transition-colors mb-6">
+          <iconify-icon icon="lucide:arrow-left" width="16"></iconify-icon> Kembali ke Beranda
+        </a>
+        <span class="inline-flex items-center gap-2 text-brand-red text-xs font-semibold tracking-widest uppercase mb-4">
+          <span class="w-8 h-px bg-brand-red"></span> Program Unggulan
+        </span>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">Formulir Pendaftaran</h1>
+        <p class="text-gray-500 font-light text-lg max-w-2xl">Berminat dengan layanan kami? Silakan isi formulir di bawah ini dan tim JP Creative akan segera menghubungi Anda.</p>
+      </div>
+    </section>
+
+    <!-- Quick Info Cards -->
+    <section class="py-8 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-brand-red-light/50 border border-brand-red/10 rounded-xl p-4 text-center">
+            <iconify-icon icon="lucide:pen-tool" width="24" class="text-brand-red mb-2"></iconify-icon>
+            <div class="text-xs font-semibold text-gray-700">Ghost Writer</div>
+            <div class="text-xs text-brand-red font-bold mt-1">Mulai Rp 1,5 Jt</div>
+          </div>
+          <div class="bg-brand-yellow-light/50 border border-brand-yellow/10 rounded-xl p-4 text-center">
+            <iconify-icon icon="lucide:book-up" width="24" class="text-brand-yellow-dark mb-2"></iconify-icon>
+            <div class="text-xs font-semibold text-gray-700">Terbit Murah</div>
+            <div class="text-xs text-brand-yellow-dark font-bold mt-1">Mulai Rp 50K</div>
+          </div>
+          <div class="bg-brand-red-light/50 border border-brand-red/10 rounded-xl p-4 text-center">
+            <iconify-icon icon="lucide:printer" width="24" class="text-brand-red mb-2"></iconify-icon>
+            <div class="text-xs font-semibold text-gray-700">Cetak Buku</div>
+            <div class="text-xs text-brand-red font-bold mt-1">Min. 5 Eks</div>
+          </div>
+          <div class="bg-brand-yellow-light/50 border border-brand-yellow/10 rounded-xl p-4 text-center">
+            <iconify-icon icon="lucide:graduation-cap" width="24" class="text-brand-yellow-dark mb-2"></iconify-icon>
+            <div class="text-xs font-semibold text-gray-700">Pelatihan Menulis</div>
+            <div class="text-xs text-brand-yellow-dark font-bold mt-1">Daftar Sekarang</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embedded Form -->
+    <section class="pb-20 bg-white">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+          <div class="bg-brand-red px-6 py-4 flex items-center gap-3">
+            <iconify-icon icon="lucide:file-text" width="20" class="text-white"></iconify-icon>
+            <span class="text-white font-semibold text-sm">Formulir Pendaftaran Layanan JP Creative</span>
+          </div>
+          <div class="p-2 md:p-4">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSfr0grVBlgOahd57qGEKCuSwPID7HnFmLfGIRUTUcu6PLZrvg/viewform?embedded=true"
+              width="100%"
+              height="800"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              class="rounded-xl"
+              loading="lazy">
+              Memuat formulir…
+            </iframe>
+          </div>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-6">
+          Jika formulir tidak tampil, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfr0grVBlgOahd57qGEKCuSwPID7HnFmLfGIRUTUcu6PLZrvg/viewform?usp=sharing&ouid=100663771046245109029" target="_blank" class="text-brand-red hover:underline">buka formulir di tab baru →</a>
+        </p>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col items-center text-center">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="https://z-cdn-media.chatglm.cn/files/84580662-42e4-4169-b71e-27018b68b221.jpeg?auth_key=1878658097-49c5fe37af24429d9a6f3748a2e7c7dc-0-4f01701efdb67110d10722f7f633f393"
+                 alt="JP Creative" class="h-10 w-10 rounded-lg object-cover" />
+            <div>
+              <div class="font-bold text-sm tracking-wider text-brand-yellow">JP CREATIVE</div>
+              <div class="text-[10px] text-gray-400 italic">Menerbitkan dengan Cinta</div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-400 font-light mb-6">Penerbit buku independen untuk Indonesia</p>
+          <div class="border-t border-gray-800 pt-6 w-full">
+            <p class="text-xs text-gray-500">&copy; 2025 JP Creative. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ============================================ -->
+  <!-- PAGE: KIRIM NASKAH (Embed Form Kirim Naskah) -->
+  <!-- ============================================ -->
+  <div id="page-kirim-naskah" class="page">
+
+    <section class="pt-24 pb-8 bg-gradient-to-b from-brand-yellow-light/30 via-white to-white grid-bg">
+      <div class="max-w-7xl mx-auto px-6">
+        <a href="#landing" onclick="navigateTo('landing')" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-brand-red transition-colors mb-6">
+          <iconify-icon icon="lucide:arrow-left" width="16"></iconify-icon> Kembali ke Beranda
+        </a>
+        <span class="inline-flex items-center gap-2 text-brand-yellow-dark text-xs font-semibold tracking-widest uppercase mb-4">
+          <span class="w-8 h-px bg-brand-yellow"></span> Kirim Naskah
+        </span>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">Kirim Naskah Anda</h1>
+        <p class="text-gray-500 font-light text-lg max-w-2xl">Punya naskah yang ingin diterbitkan? Isi formulir di bawah ini dan naskah Anda akan otomatis terkirim ke <span class="font-medium text-gray-700">jpcreative.bekasi@gmail.com</span></p>
+      </div>
+    </section>
+
+    <!-- Info Cards -->
+    <section class="py-8 bg-white">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-4 mb-8">
+          <div class="flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+              <iconify-icon icon="lucide:check-circle" width="20" class="text-green-600"></iconify-icon>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-gray-800">Otomatis Terkirim</div>
+              <div class="text-xs text-gray-500 mt-0.5">Naskah langsung terkirim ke email JP Creative</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+              <iconify-icon icon="lucide:shield-check" width="20" class="text-blue-600"></iconify-icon>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-gray-800">Aman & Rahasia</div>
+              <div class="text-xs text-gray-500 mt-0.5">Naskah Anda terjaga kerahasiaannya</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-xl p-4">
+            <div class="w-10 h-10 bg-brand-yellow-light rounded-lg flex items-center justify-center shrink-0">
+              <iconify-icon icon="lucide:clock" width="20" class="text-brand-yellow-dark"></iconify-icon>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-gray-800">Respon Cepat</div>
+              <div class="text-xs text-gray-500 mt-0.5">Tim kami akan merespon dalam 1-3 hari kerja</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embedded Form -->
+    <section class="pb-20 bg-white">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg">
+          <div class="bg-brand-yellow-dark px-6 py-4 flex items-center gap-3">
+            <iconify-icon icon="lucide:send" width="20" class="text-white"></iconify-icon>
+            <span class="text-white font-semibold text-sm">Formulir Pengiriman Naskah</span>
+          </div>
+          <div class="p-2 md:p-4">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdZkptYG03Abg89mrDZigXLQo0VojFNldNwOQy4HlajXl_iQg/viewform?embedded=true"
+              width="100%"
+              height="800"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              class="rounded-xl"
+              loading="lazy">
+              Memuat formulir…
+            </iframe>
+          </div>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-6">
+          Jika formulir tidak tampil, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZkptYG03Abg89mrDZigXLQo0VojFNldNwOQy4HlajXl_iQg/viewform?usp=sharing&ouid=100663771046245109029" target="_blank" class="text-brand-red hover:underline">buka formulir di tab baru →</a>
+        </p>
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-500">Atau kirim naskah langsung via email ke:</p>
+          <a href="mailto:jpcreative.bekasi@gmail.com" class="inline-flex items-center gap-2 text-brand-red font-semibold mt-2 hover:underline">
+            <iconify-icon icon="lucide:mail" width="16"></iconify-icon>
+            jpcreative.bekasi@gmail.com
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col items-center text-center">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="https://z-cdn-media.chatglm.cn/files/84580662-42e4-4169-b71e-27018b68b221.jpeg?auth_key=1878658097-49c5fe37af24429d9a6f3748a2e7c7dc-0-4f01701efdb67110d10722f7f633f393"
+                 alt="JP Creative" class="h-10 w-10 rounded-lg object-cover" />
+            <div>
+              <div class="font-bold text-sm tracking-wider text-brand-yellow">JP CREATIVE</div>
+              <div class="text-[10px] text-gray-400 italic">Menerbitkan dengan Cinta</div>
+            </div>
+          </div>
+          <p class="text-sm text-gray-400 font-light mb-6">Penerbit buku independen untuk Indonesia</p>
+          <div class="border-t border-gray-800 pt-6 w-full">
+            <p class="text-xs text-gray-500">&copy; 2025 JP Creative. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ============================================ -->
+  <!-- WHATSAPP FLOATING BUTTON & POPUP             -->
+  <!-- ============================================ -->
+  <div id="wa-widget" class="fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-3">
+    <!-- Popup Options -->
+    <div id="wa-popup" class="hidden wa-popup bg-white border border-gray-200 rounded-2xl shadow-2xl p-5 w-72 mb-2">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+            <iconify-icon icon="lucide:message-circle" width="20" class="text-white"></iconify-icon>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-gray-900">JP Creative</div>
+            <div class="text-[10px] text-green-500 font-medium flex items-center gap-1">
+              <span class="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span> Online
+            </div>
+          </div>
+        </div>
+        <button onclick="toggleWaPopup()" class="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+          <iconify-icon icon="lucide:x" width="18" class="text-gray-400"></iconify-icon>
+        </button>
+      </div>
+      <p class="text-xs text-gray-500 mb-4">Halo! Ada yang bisa kami bantu? Pilih opsi di bawah ini:</p>
+      <div class="flex flex-col gap-2">
+        <a href="https://wa.me/6282112038785?text=Halo%20JP%20Creative%2C%20saya%20ingin%20bertanya%20tentang%20layanan%20Anda."
+           target="_blank" rel="noopener"
+           class="flex items-center gap-3 bg-green-50 hover:bg-green-100 border border-green-200 text-green-700 rounded-xl px-4 py-3 transition-colors duration-200 group">
+          <iconify-icon icon="lucide:message-circle" width="18" class="group-hover:scale-110 transition-transform"></iconify-icon>
+          <div>
+            <div class="text-sm font-semibold">Tanya Admin</div>
+            <div class="text-[10px] text-green-600/70">Tanya seputar layanan & info</div>
+          </div>
+        </a>
+        <a href="https://wa.me/6282112038785?text=Halo%20JP%20Creative%2C%20saya%20ingin%20memesan%20buku."
+           target="_blank" rel="noopener"
+           class="flex items-center gap-3 bg-brand-red-light hover:bg-red-100 border border-brand-red/20 text-brand-red rounded-xl px-4 py-3 transition-colors duration-200 group">
+          <iconify-icon icon="lucide:shopping-bag" width="18" class="group-hover:scale-110 transition-transform"></iconify-icon>
+          <div>
+            <div class="text-sm font-semibold">Pesan Buku</div>
+            <div class="text-[10px] text-brand-red/70">Pesan & beli buku via WA</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Floating Button -->
+    <button onclick="toggleWaPopup()" id="wa-btn"
+            class="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-300 wa-pulse hover:scale-110 active:scale-95">
+      <iconify-icon icon="lucide:message-circle" width="28" class="text-white" id="wa-btn-icon"></iconify-icon>
+    </button>
+  </div>
+
+
+  <!-- ============================================ -->
   <!-- TOAST CONTAINER                              -->
   <!-- ============================================ -->
-  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
+  <div id="toast-container" class="fixed bottom-6 left-6 z-[100] flex flex-col gap-3 pointer-events-none"></div>
 
 
   <!-- ============================================ -->
@@ -454,35 +815,19 @@
   <!-- ============================================ -->
   <script>
     // =============================================
-    // KONFIGURASI — SILAKAN UBAH BAGIAN INI
+    // KONFIGURASI
     // =============================================
-
-    // 1. URL Google Sheets CSV Anda
-    //    Cara mendapatkan:
-    //    a. Buka Google Sheets Anda
-    //    b. Klik File > Bagikan > Publikasikan ke web
-    //    c. Pilih sheet dan format "Comma-separated values (.csv)"
-    //    d. Klik Publikasikan, lalu salin URL yang muncul
-    //    e. Tempelkan URL tersebut di bawah ini:
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQszAlodmqpNXXYIqu0X-RFPxsr_kos9Fi4ooP-j8vkO7IkueNTvVYLWlNqYqCYXdQErSUEuaIhOlOR/pub?output=csv';
-
-    // 2. Base URL untuk gambar cover buku (GitHub raw)
-    //    Ganti USERNAME dan REPO sesuai akun GitHub Anda
     const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/webidevi732-art/jpcreative-assets/main/covers/';
-
-    // 3. Nomor WhatsApp untuk tombol "Beli" (format internasional tanpa +)
-    const WHATSAPP_NUMBER = '6281234567890';
-
-    // 4. Logo URL (opsional, ganti jika Anda sudah host logo sendiri)
+    const WHATSAPP_NUMBER = '6282112038785';
     const LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/84580662-42e4-4169-b71e-27018b68b221.jpeg?auth_key=1878658097-49c5fe37af24429d9a6f3748a2e7c7dc-0-4f01701efdb67110d10722f7f633f393';
-
 
     // =============================================
     // STATE
     // =============================================
     let allBooks = [];
     let currentPage = 'landing';
-
+    let waPopupOpen = false;
 
     // =============================================
     // NAVIGATION (SPA-style)
@@ -497,18 +842,15 @@
       }
     }
 
-    // Handle browser back/forward
     window.addEventListener('hashchange', () => {
       const hash = location.hash.replace('#', '') || 'landing';
       navigateTo(hash);
     });
 
-    // Initial route
     window.addEventListener('DOMContentLoaded', () => {
       const hash = location.hash.replace('#', '') || 'landing';
       navigateTo(hash);
     });
-
 
     // =============================================
     // MOBILE MENU
@@ -518,6 +860,38 @@
       menu.classList.toggle('hidden');
     }
 
+    // =============================================
+    // WHATSAPP POPUP
+    // =============================================
+    function toggleWaPopup() {
+      const popup = document.getElementById('wa-popup');
+      const btnIcon = document.getElementById('wa-btn-icon');
+      const btn = document.getElementById('wa-btn');
+
+      waPopupOpen = !waPopupOpen;
+
+      if (waPopupOpen) {
+        popup.classList.remove('hidden');
+        btnIcon.setAttribute('icon', 'lucide:x');
+        btn.classList.remove('wa-pulse');
+        btn.classList.add('bg-gray-600');
+        btn.classList.remove('bg-green-500');
+      } else {
+        popup.classList.add('hidden');
+        btnIcon.setAttribute('icon', 'lucide:message-circle');
+        btn.classList.add('wa-pulse');
+        btn.classList.remove('bg-gray-600');
+        btn.classList.add('bg-green-500');
+      }
+    }
+
+    // Close popup when clicking outside
+    document.addEventListener('click', function(e) {
+      const waWidget = document.getElementById('wa-widget');
+      if (waPopupOpen && waWidget && !waWidget.contains(e.target)) {
+        toggleWaPopup();
+      }
+    });
 
     // =============================================
     // TOAST NOTIFICATIONS
@@ -542,12 +916,11 @@
       container.appendChild(toast);
       setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
+        toast.style.transform = 'translateX(-100%)';
         toast.style.transition = 'all 0.3s ease';
         setTimeout(() => toast.remove(), 300);
       }, 3500);
     }
-
 
     // =============================================
     // FETCH & PARSE CSV
@@ -563,7 +936,6 @@
           header: true,
           skipEmptyLines: true,
           complete: function(results) {
-            // Trim whitespace from headers and values
             allBooks = results.data.map(row => {
               const cleaned = {};
               Object.keys(row).forEach(key => {
@@ -596,7 +968,6 @@
       if (emptyEl) emptyEl.classList.remove('hidden');
     }
 
-
     // =============================================
     // RENDER: BOOK CARD HTML
     // =============================================
@@ -607,13 +978,11 @@
       const harga = book.harga || 'Hubungi kami';
       const deskripsi = book.deskripsi || '';
 
-      // WhatsApp message
       const waMessage = encodeURIComponent(`Halo JP Creative, saya ingin membeli buku:\n📖 *${judul}*\n✍️ Penulis: ${penulis}\n💰 Harga: ${harga}`);
       const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
 
       return `
         <div class="book-card bg-white border border-gray-100 rounded-2xl overflow-hidden group" style="animation: fadeIn 0.4s ease-out ${index * 0.05}s both;">
-          <!-- Cover Image -->
           <div class="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50">
             ${coverUrl
               ? `<img src="${coverUrl}" alt="${judul}" loading="lazy"
@@ -624,13 +993,10 @@
                    <span class="text-xs mt-2">Cover belum tersedia</span>
                  </div>`
             }
-            <!-- Price badge -->
             <div class="absolute top-3 right-3 bg-brand-red text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-md">
               ${typeof harga === 'string' && harga.startsWith('Rp') ? harga : (harga ? 'Rp ' + harga : '')}
             </div>
           </div>
-
-          <!-- Card Content -->
           <div class="p-4 md:p-5">
             <h3 class="text-sm md:text-base font-semibold text-gray-900 leading-snug mb-1 line-clamp-2 group-hover:text-brand-red transition-colors duration-200">${judul}</h3>
             <p class="text-xs text-gray-400 mb-3 flex items-center gap-1">
@@ -647,15 +1013,14 @@
       `;
     }
 
-
     // =============================================
-    // RENDER: FEATURED BOOKS (Landing Page)
+    // RENDER: FEATURED BOOKS
     // =============================================
     function renderFeaturedBooks() {
       const container = document.getElementById('featured-books');
       if (!container) return;
 
-      const featured = allBooks.slice(0, 4); // Ambil 4 buku pertama
+      const featured = allBooks.slice(0, 4);
 
       if (featured.length === 0) {
         container.innerHTML = `
@@ -669,9 +1034,8 @@
       container.innerHTML = featured.map((book, i) => createBookCard(book, i)).join('');
     }
 
-
     // =============================================
-    // RENDER: FULL CATALOG (Katalog Page)
+    // RENDER: FULL CATALOG
     // =============================================
     function renderCatalog(books) {
       const grid = document.getElementById('book-grid');
@@ -690,16 +1054,14 @@
       if (emptyEl) emptyEl.classList.add('hidden');
       if (countEl) countEl.textContent = books.length;
 
-      // Remove loading & empty states, keep only book cards
       const existingCards = grid.querySelectorAll('.book-card');
       existingCards.forEach(c => c.remove());
 
       grid.insertAdjacentHTML('beforeend', books.map((book, i) => createBookCard(book, i)).join(''));
     }
 
-
     // =============================================
-    // SEARCH FUNCTIONALITY
+    // SEARCH
     // =============================================
     const searchInput = document.getElementById('searchInput');
     let searchTimeout;
@@ -722,9 +1084,8 @@
         });
 
         renderCatalog(filtered);
-      }, 300); // Debounce 300ms
+      }, 300);
     });
-
 
     // =============================================
     // NAVBAR SCROLL EFFECT
@@ -738,7 +1099,6 @@
         navbar.classList.remove('shadow-md');
       }
     });
-
 
     // =============================================
     // INIT
