@@ -811,14 +811,14 @@
 
 
   <!-- ============================================ -->
-  <!-- JAVASCRIPT                                   -->
+  <!-- JAVASCRIPT (Sudah Diperbaiki)                -->
   <!-- ============================================ -->
   <script>
     // =============================================
     // KONFIGURASI
     // =============================================
     const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRijYu6a0h_OxyQ-prBf8Tgwkyl3bvPT3FoF_F_nt8h03xfbFlCjU8_4cWS4aX0WATuhJ5zNwF9BSL-/pub?output=csv';
-    const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/webidevi732-art/jpcreative-assets/main/covers/';
+    const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/webidevi732-art/jpcreative-assets/main/';
     const WHATSAPP_NUMBER = '6282112038785';
     const LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/84580662-42e4-4169-b71e-27018b68b221.jpeg?auth_key=1878658097-49c5fe37af24429d9a6f3748a2e7c7dc-0-4f01701efdb67110d10722f7f633f393';
 
@@ -923,7 +923,7 @@
     }
 
     // =============================================
-    // FETCH & PARSE CSV
+    // FETCH & PARSE CSV (DIPERBAIKI)
     // =============================================
     async function fetchBooks() {
       try {
@@ -939,12 +939,17 @@
             allBooks = results.data.map(row => {
               const cleaned = {};
               Object.keys(row).forEach(key => {
-                cleaned[key.trim().toLowerCase()] = (row[key] || '').trim();
+                let cleanKey = key.trim().toLowerCase();
+                // Mapping untuk kolom yang namanya berbeda
+                if (cleanKey === 'judul buku') cleanKey = 'judul';
+                if (cleanKey === 'judulbuku') cleanKey = 'judul';
+                cleaned[cleanKey] = (row[key] || '').trim();
               });
               return cleaned;
             });
 
             console.log('Buku berhasil dimuat:', allBooks.length);
+            console.log('Sample data:', allBooks[0]); // Debug: lihat data pertama
             renderFeaturedBooks();
             renderCatalog(allBooks);
           },
@@ -969,16 +974,17 @@
     }
 
     // =============================================
-    // RENDER: BOOK CARD HTML
+    // RENDER: BOOK CARD HTML (DIPERBAIKI)
     // =============================================
     function createBookCard(book, index) {
       const coverUrl = book.cover ? IMAGE_BASE_URL + book.cover : '';
       const judul = book.judul || 'Tanpa Judul';
       const penulis = book.penulis || 'Penulis Tidak Diketahui';
-      const harga = book.harga || 'Hubungi kami';
+      const hargaValue = book.harga ? parseInt(book.harga) : 0;
+      const hargaDisplay = hargaValue > 0 ? `Rp ${hargaValue.toLocaleString('id-ID')}` : 'Hubungi Kami';
       const deskripsi = book.deskripsi || '';
 
-      const waMessage = encodeURIComponent(`Halo JP Creative, saya ingin membeli buku:\n📖 *${judul}*\n✍️ Penulis: ${penulis}\n💰 Harga: ${harga}`);
+      const waMessage = encodeURIComponent(`Halo JP Creative, saya ingin membeli buku:\n📖 *${judul}*\n✍️ Penulis: ${penulis}\n💰 Harga: ${hargaDisplay}`);
       const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
 
       return `
@@ -994,7 +1000,7 @@
                  </div>`
             }
             <div class="absolute top-3 right-3 bg-brand-red text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-md">
-              ${typeof harga === 'string' && harga.startsWith('Rp') ? harga : (harga ? 'Rp ' + harga : '')}
+              ${hargaDisplay}
             </div>
           </div>
           <div class="p-4 md:p-5">
@@ -1066,26 +1072,28 @@
     const searchInput = document.getElementById('searchInput');
     let searchTimeout;
 
-    searchInput.addEventListener('input', function() {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        const query = this.value.toLowerCase().trim();
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          const query = this.value.toLowerCase().trim();
 
-        if (!query) {
-          renderCatalog(allBooks);
-          return;
-        }
+          if (!query) {
+            renderCatalog(allBooks);
+            return;
+          }
 
-        const filtered = allBooks.filter(book => {
-          const judul = (book.judul || '').toLowerCase();
-          const penulis = (book.penulis || '').toLowerCase();
-          const deskripsi = (book.deskripsi || '').toLowerCase();
-          return judul.includes(query) || penulis.includes(query) || deskripsi.includes(query);
-        });
+          const filtered = allBooks.filter(book => {
+            const judul = (book.judul || '').toLowerCase();
+            const penulis = (book.penulis || '').toLowerCase();
+            const deskripsi = (book.deskripsi || '').toLowerCase();
+            return judul.includes(query) || penulis.includes(query) || deskripsi.includes(query);
+          });
 
-        renderCatalog(filtered);
-      }, 300);
-    });
+          renderCatalog(filtered);
+        }, 300);
+      });
+    }
 
     // =============================================
     // NAVBAR SCROLL EFFECT
