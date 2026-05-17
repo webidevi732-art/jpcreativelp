@@ -103,6 +103,143 @@
       background-position: center 30%;
       background-repeat: no-repeat;
     }
+
+    /* MODAL POPUP */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      background: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: #fee2e2;
+      transform: scale(1.1);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-cover {
+      width: 120px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #1f2937;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .modal-author {
+      font-size: 14px;
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .modal-price {
+      font-size: 24px;
+      font-weight: bold;
+      color: #dc2626;
+      text-align: center;
+      margin-bottom: 16px;
+      padding: 8px;
+      background: #fee2e2;
+      border-radius: 12px;
+      display: inline-block;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .modal-wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #25D366;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-wa-btn:hover {
+      background: #128C7E;
+      transform: translateY(-2px);
+    }
   </style>
 </head>
 
@@ -196,11 +333,11 @@
 
             <div class="flex gap-8 mt-12 pt-8 border-t border-white/20">
               <div>
-                <div class="text-2xl font-bold text-white">50+</div>
+                <div class="text-2xl font-bold text-white">200+</div>
                 <div class="text-xs text-gray-400 mt-0.5">Judul Buku</div>
               </div>
               <div>
-                <div class="text-2xl font-bold text-brand-yellow">30+</div>
+                <div class="text-2xl font-bold text-brand-yellow">100+</div>
                 <div class="text-xs text-gray-400 mt-0.5">Penulis</div>
               </div>
               <div>
@@ -219,7 +356,7 @@
                   <div class="relative z-10">
                     <div class="text-xs font-semibold tracking-widest text-brand-yellow mb-4">Hot Item</div>
                     <div class="w-16 h-1 bg-brand-yellow rounded mb-4"></div>
-                    <h3 class="text-xl font-bold leading-snug mb-2">Terbitkan Buku Baru</h3>
+                    <h3 class="text-xl font-bold leading-snug mb-2">Terbit Buku</h3>
                     <p class="text-sm text-white/60 font-light">Minimal Cetak 5</p>
                     <div class="mt-6 flex items-center gap-2">
                       <span class="text-2xl font-bold text-brand-yellow">Mulai Rp 50K</span>
@@ -739,6 +876,32 @@
 
 
   <!-- ============================================ -->
+  <!-- MODAL POPUP SINopsis                          -->
+  <!-- ============================================ -->
+  <div id="bookModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal()">
+        <iconify-icon icon="lucide:x" width="20"></iconify-icon>
+      </div>
+      <div class="modal-body">
+        <img id="modalCover" class="modal-cover" src="" alt="Cover Buku">
+        <h3 id="modalTitle" class="modal-title"></h3>
+        <p id="modalAuthor" class="modal-author">
+          <iconify-icon icon="lucide:pen-tool" width="14"></iconify-icon>
+          <span id="modalAuthorName"></span>
+        </p>
+        <div id="modalPrice" class="modal-price"></div>
+        <p id="modalDesc" class="modal-desc"></p>
+        <a id="modalWaLink" href="#" target="_blank" class="modal-wa-btn">
+          <iconify-icon icon="lucide:message-circle" width="18"></iconify-icon>
+          Beli via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================ -->
   <!-- WHATSAPP FLOATING BUTTON & POPUP             -->
   <!-- ============================================ -->
   <div id="wa-widget" class="fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-3">
@@ -796,7 +959,7 @@
 
 
   <!-- ============================================ -->
-  <!-- JAVASCRIPT (DIPERBAIKI)                     -->
+  <!-- JAVASCRIPT                                   -->
   <!-- ============================================ -->
   <script>
     // =============================================
@@ -813,23 +976,18 @@
     let waPopupOpen = false;
 
     // =============================================
-    // NAVIGATION - DIPERBAIKI
+    // NAVIGATION
     // =============================================
     function navigateTo(page) {
-      // Sembunyikan semua page
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      // Tampilkan page yang dipilih
       const target = document.getElementById('page-' + page);
       if (target) {
         target.classList.add('active');
-        // Update URL hash tanpa trigger event
         history.pushState(null, '', '#' + page);
-        // Scroll ke atas
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    // Handle back/forward browser
     window.addEventListener('popstate', () => {
       const hash = location.hash.replace('#', '') || 'landing';
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -837,7 +995,6 @@
       if (target) target.classList.add('active');
     });
 
-    // Initial load dari hash
     document.addEventListener('DOMContentLoaded', () => {
       const hash = location.hash.replace('#', '') || 'landing';
       navigateTo(hash);
@@ -879,6 +1036,54 @@
       const waWidget = document.getElementById('wa-widget');
       if (waPopupOpen && waWidget && !waWidget.contains(e.target)) {
         toggleWaPopup();
+      }
+    });
+
+    // =============================================
+    // MODAL POPUP FUNCTIONS
+    // =============================================
+    function openModal(coverUrl, judul, penulis, harga, deskripsi, waLink) {
+      const modal = document.getElementById('bookModal');
+      const modalCover = document.getElementById('modalCover');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalAuthorName = document.getElementById('modalAuthorName');
+      const modalPrice = document.getElementById('modalPrice');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalWaLink = document.getElementById('modalWaLink');
+
+      if (coverUrl && coverUrl !== '') {
+        modalCover.src = coverUrl;
+        modalCover.style.display = 'block';
+      } else {
+        modalCover.style.display = 'none';
+      }
+      
+      modalCover.alt = judul;
+      modalTitle.textContent = judul;
+      modalAuthorName.textContent = penulis;
+      modalPrice.textContent = harga;
+      modalDesc.textContent = deskripsi;
+      modalWaLink.href = waLink;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('bookModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    document.getElementById('bookModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
       }
     });
 
@@ -951,7 +1156,7 @@
     }
 
     // =============================================
-    // BOOK CARD
+    // BOOK CARD (dengan popup)
     // =============================================
     function createBookCard(book, index) {
       const coverUrl = book.cover ? IMAGE_BASE_URL + book.cover : '';
@@ -959,13 +1164,20 @@
       const penulis = book.penulis || 'Penulis Tidak Diketahui';
       const hargaValue = book.harga ? parseInt(book.harga) : 0;
       const hargaDisplay = hargaValue > 0 ? `Rp ${hargaValue.toLocaleString('id-ID')}` : 'Hubungi Kami';
-      const deskripsi = book.deskripsi || '';
+      const deskripsi = book.deskripsi || 'Tidak ada deskripsi untuk buku ini.';
 
       const waMessage = encodeURIComponent(`Halo JP Creative, saya ingin membeli buku:\n📖 *${judul}*\n✍️ Penulis: ${penulis}\n💰 Harga: ${hargaDisplay}`);
       const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
 
+      // Escape single quotes untuk safety
+      const safeJudul = judul.replace(/'/g, "\\'");
+      const safePenulis = penulis.replace(/'/g, "\\'");
+      const safeDeskripsi = deskripsi.replace(/'/g, "\\'").replace(/\n/g, ' ');
+
       return `
-        <div class="book-card bg-white border border-gray-100 rounded-2xl overflow-hidden group" style="animation: fadeIn 0.4s ease-out ${index * 0.05}s both;">
+        <div class="book-card bg-white border border-gray-100 rounded-2xl overflow-hidden group cursor-pointer" 
+             style="animation: fadeIn 0.4s ease-out ${index * 0.05}s both;"
+             onclick="openModal('${coverUrl}', '${safeJudul}', '${safePenulis}', '${hargaDisplay}', '${safeDeskripsi}', '${waLink}')">
           <div class="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50">
             ${coverUrl
               ? `<img src="${coverUrl}" alt="${judul}" loading="lazy"
@@ -985,12 +1197,11 @@
             <p class="text-xs text-gray-400 mb-3 flex items-center gap-1">
               <iconify-icon icon="lucide:pen-tool" width="12"></iconify-icon> ${penulis}
             </p>
-            ${deskripsi ? `<p class="text-xs text-gray-500 font-light leading-relaxed mb-4 line-clamp-2">${deskripsi}</p>` : '<div class="mb-4"></div>'}
-            <a href="${waLink}" target="_blank" rel="noopener"
-               class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-semibold py-2.5 px-4 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-md">
-              <iconify-icon icon="lucide:message-circle" width="16"></iconify-icon>
-              Beli via WhatsApp
-            </a>
+            ${deskripsi ? `<p class="text-xs text-gray-500 font-light leading-relaxed mb-4 line-clamp-2">${deskripsi.substring(0, 80)}${deskripsi.length > 80 ? '...' : ''}</p>` : '<div class="mb-4"></div>'}
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-brand-red font-medium">Klik untuk detail</span>
+              <iconify-icon icon="lucide:chevron-right" width="16" class="text-gray-400 group-hover:translate-x-1 transition-transform"></iconify-icon>
+            </div>
           </div>
         </div>
       `;
